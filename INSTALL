@@ -1,0 +1,4 @@
+This is the standalone protoc compiler that has a Scala builder generator in addition to the standard Java generator. Those are triggered with --scala_out and --java_out respectively.
+
+To build this package you first have to build Google standard compiler. Then copy libprotobuf.a and libprotoc.a just built to ./lib directory.
+Set the desired output name in OUT variable in Makefile. Finally you are ready to invoke 'make build' and find the binary in ./target directory.
