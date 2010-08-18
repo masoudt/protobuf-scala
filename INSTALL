@@ -1,6 +1,6 @@
 This is the plugin protoc compiler that outputs a Scala builder code for standard Java output.
 
-To build this package you first have to build Google standard compiler. Then copy libprotobuf.a and libprotoc.a just built to ./lib directory.
-Finally you are ready to invoke 'make build' and find the binary in ./target directory.
+To build this package you first have to build Google standard compiler.
+Issue 'make install' in its top directory.  Then invoke 'make build' for a plugin and find the binary in ./target directory.
 
 Place the plugin binary somewhere in the PATH; invoke protoc with the parameter --scala_out=OUT_DIR.
