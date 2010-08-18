@@ -12,24 +12,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <google/protobuf/compiler/command_line_interface.h>
-#include <google/protobuf/compiler/java/java_generator.h>
+#include <google/protobuf/compiler/plugin.h>
 #include <org/matmexrhino/protobuf/scala/scala_generator.h>
 
 
 int main(int argc, char* argv[]) {
-
-  google::protobuf::compiler::CommandLineInterface cli;
-
-  // Proto2 Java
-  google::protobuf::compiler::java::JavaGenerator java_generator;
-  cli.RegisterGenerator("--java_out", &java_generator,
-                        "Generate Java source file.");
-
-  // Proto2 Scala
-  org::matmexrhino::protobuf::scala::ScalaGenerator scala_generator;
-  cli.RegisterGenerator("--scala_out", &scala_generator,
-                        "Generate Scala source builder file.");
-
-  return cli.Run(argc, argv);
+  org::matmexrhino::protobuf::scala::ScalaGenerator generator;  
+  return google::protobuf::compiler::PluginMain(argc, argv, &generator);
 }
