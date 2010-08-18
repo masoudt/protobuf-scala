@@ -1,5 +1,5 @@
 CC=g++
-OUT=protoc.exe  # change this for your env, configure later.
+OUT=protoc-gen-scala
 
 SRCDIR=./src/org/matmexrhino/protobuf/scala
 
