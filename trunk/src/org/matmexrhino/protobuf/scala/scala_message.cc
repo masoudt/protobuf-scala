@@ -65,7 +65,7 @@ void ScalaMessageGenerator::Generate(const Descriptor* descriptor,
   printer->Print(objvars,
     "object $name$ extends "
     "org.matmexrhino.protobuf.scala.MessageObject[$classname$.Builder]"
-    "($classname$.newBuilder) {\n");
+    "($classname$.newBuilder, _.clone) {\n");
   printer->Indent();
   for(int i = 0; i < descriptor->field_count(); ++i) {
     const FieldDescriptor* field = descriptor->field(i);
