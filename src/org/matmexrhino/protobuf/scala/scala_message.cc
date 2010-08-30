@@ -64,9 +64,10 @@ void ScalaMessageGenerator::Generate(const Descriptor* descriptor,
   objvars["classname"] = classname;
   printer->Print(objvars,
     "object $name$ extends "
-    "org.matmexrhino.protobuf.scala.MessageObject[$classname$.Builder]"
-    "($classname$.newBuilder, _.clone) {\n");
+    "org.matmexrhino.protobuf.scala.MessageObject[$classname$.Builder] {\n");
   printer->Indent();
+  printer->Print(objvars, "def newInstance = $classname$.newBuilder\n");
+  printer->Print(objvars, "def clone(b : $classname$.Builder) = b.clone\n");
   for(int i = 0; i < descriptor->field_count(); ++i) {
     const FieldDescriptor* field = descriptor->field(i);
     map<string, string> vars;
