@@ -19,6 +19,7 @@
 #include <google/protobuf/io/printer.h>
 
 using google::protobuf::Descriptor;
+using google::protobuf::FieldDescriptor;
 using google::protobuf::io::Printer;
 
 namespace org {
@@ -33,6 +34,12 @@ class ScalaMessageGenerator {
 
   void Generate(const Descriptor* descriptor, Printer* printer);
  private:
+  void PrintField(const FieldDescriptor* field, 
+		  const std::string& classname,
+		  const std::string& constr_value_part,
+		  bool box_field_type,
+		  Printer* printer);
+
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(ScalaMessageGenerator);
 };
 
