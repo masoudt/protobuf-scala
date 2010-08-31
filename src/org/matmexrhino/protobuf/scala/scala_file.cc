@@ -15,7 +15,6 @@
 #include <org/matmexrhino/protobuf/scala/scala_file.h>
 
 #include <google/protobuf/compiler/java/java_helpers.h>
-#include <org/matmexrhino/protobuf/scala/scala_message.h>
 
 using std::string;
 using google::protobuf::compiler::java::FileJavaPackage;
@@ -26,7 +25,7 @@ namespace protobuf {
 namespace scala {
 
 ScalaFileGenerator::ScalaFileGenerator(const FileDescriptor* descriptor)
-  : descriptor_(descriptor) {}
+  : descriptor_(descriptor), message_gen_() {}
 
 void ScalaFileGenerator::Generate(Printer* printer) {
   printer->Print(
@@ -37,7 +36,7 @@ void ScalaFileGenerator::Generate(Printer* printer) {
   printer->Print("package $package$\n\n", "package", scala_package);
 
   for (int i = 0; i < descriptor_->message_type_count(); i++) {
-    ScalaMessageGenerator().Generate(descriptor_->message_type(i), printer);
+    message_gen_.Generate(descriptor_->message_type(i), printer);
   }
 }
 

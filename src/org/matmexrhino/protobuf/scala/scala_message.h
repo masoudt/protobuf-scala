@@ -32,13 +32,13 @@ class ScalaMessageGenerator {
   ScalaMessageGenerator();
   ~ScalaMessageGenerator();
 
-  void Generate(const Descriptor* descriptor, Printer* printer);
+  void Generate(const Descriptor* descriptor, Printer* printer) const;
  private:
   void PrintField(const FieldDescriptor* field, 
 		  const std::string& classname,
 		  const std::string& constr_value_part,
 		  bool box_field_type,
-		  Printer* printer);
+		  Printer* printer) const;
 
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(ScalaMessageGenerator);
 };
