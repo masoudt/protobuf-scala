@@ -80,6 +80,21 @@ void ScalaMessageGenerator::PrintField(const FieldDescriptor* field,
 		 "[$classname$, $opttype$]$constr$\n");
 }
 
+void ScalaMessageGenerator::GenerateField(const FieldDescriptor* field,
+					  const string& classname,
+					  Printer* printer) const {
+  PrintField(field, classname, 
+	     UnderscoresToCapitalizedCamelCase(field) + " _", false, printer);
+}
+
+void ScalaMessageGenerator::GenerateExtension(const FieldDescriptor* field,
+					      const string& classname,
+					      Printer* printer) const {
+  const string generated_extension = classname + "." + field->name();
+  PrintField(field, ClassName(field->containing_type()),
+	     "Extension(" + generated_extension + ", _)", true, printer);
+}
+
 void ScalaMessageGenerator::Generate(const Descriptor* descriptor,
 				     Printer* printer) const {
   string classname = ClassName(descriptor);
@@ -94,16 +109,11 @@ void ScalaMessageGenerator::Generate(const Descriptor* descriptor,
   printer->Print(objvars, "def newInstance = $classname$.newBuilder\n");
   printer->Print(objvars, "def clone(b : $classname$.Builder) = b.clone\n");
   for(int i = 0; i < descriptor->field_count(); ++i) {
-    const FieldDescriptor* field = descriptor->field(i);
-    PrintField(field, classname, 
-	       UnderscoresToCapitalizedCamelCase(field) + " _", false, printer);
+    GenerateField(descriptor->field(i), classname, printer);
   }
 
   for(int i = 0; i < descriptor->extension_count(); ++i) {
-    const FieldDescriptor* field = descriptor->extension(i);
-    const string generated_extension = classname + "." + field->name();
-    PrintField(field, ClassName(field->containing_type()),
-	       "Extension(" + generated_extension + ", _)", true, printer);
+    GenerateExtension(descriptor->extension(i), classname, printer);
   }
 
   printer->Print("\n");
