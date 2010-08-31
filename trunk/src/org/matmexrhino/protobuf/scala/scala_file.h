@@ -17,6 +17,7 @@
 
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/io/printer.h>
+#include <org/matmexrhino/protobuf/scala/scala_message.h>
 
 using google::protobuf::FileDescriptor;
 using google::protobuf::io::Printer;
@@ -34,6 +35,7 @@ class ScalaFileGenerator {
 
  private:
   const FileDescriptor* descriptor_;
+  const ScalaMessageGenerator message_gen_;
 
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(ScalaFileGenerator);
 };

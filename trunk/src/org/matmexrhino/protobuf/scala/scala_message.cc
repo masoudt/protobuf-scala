@@ -59,7 +59,7 @@ void ScalaMessageGenerator::PrintField(const FieldDescriptor* field,
 				       const string& classname,
 				       const string& constr_value_part,
 				       bool box_field_type,
-				       Printer* printer) {
+				       Printer* printer) const {
   map<string, string> vars;
   vars["name"] =  field->name();
   vars["classname"] = classname + ".Builder";
@@ -81,7 +81,7 @@ void ScalaMessageGenerator::PrintField(const FieldDescriptor* field,
 }
 
 void ScalaMessageGenerator::Generate(const Descriptor* descriptor,
-				     Printer* printer) {
+				     Printer* printer) const {
   string classname = ClassName(descriptor);
 
   map<string, string> objvars;
