@@ -33,8 +33,15 @@ class ScalaMessageGenerator {
   ~ScalaMessageGenerator();
 
   void Generate(const Descriptor* descriptor, Printer* printer) const;
+
+  void GenerateField(const FieldDescriptor* field,
+		     const std::string& classname,
+		     Printer* printer) const;
+  void GenerateExtension(const FieldDescriptor* field,
+			 const std::string& classname,
+			 Printer* printer) const;
  private:
-  void PrintField(const FieldDescriptor* field, 
+  void PrintField(const FieldDescriptor* field,
 		  const std::string& classname,
 		  const std::string& constr_value_part,
 		  bool box_field_type,

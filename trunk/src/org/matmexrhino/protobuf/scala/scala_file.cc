@@ -17,6 +17,8 @@
 #include <google/protobuf/compiler/java/java_helpers.h>
 
 using std::string;
+using google::protobuf::compiler::java::ClassName;
+using google::protobuf::compiler::java::FileClassName;
 using google::protobuf::compiler::java::FileJavaPackage;
 
 namespace org {
@@ -35,9 +37,20 @@ void ScalaFileGenerator::Generate(Printer* printer) {
   string scala_package = FileJavaPackage(descriptor_) + ".scala";
   printer->Print("package $package$\n\n", "package", scala_package);
 
+  printer->Print("object $objectname$ {\n", "objectname", FileClassName(descriptor_));
+  printer->Indent();
+
   for (int i = 0; i < descriptor_->message_type_count(); i++) {
     message_gen_.Generate(descriptor_->message_type(i), printer);
   }
+
+  for(int i = 0; i < descriptor_->extension_count(); ++i) {
+    const FieldDescriptor* field = descriptor_->extension(i);
+    message_gen_.GenerateExtension(field, ClassName(descriptor_), printer);
+  }
+
+  printer->Outdent();
+  printer->Print("}");
 }
 
 }  // namespace scala
