@@ -43,7 +43,8 @@ namespace {
     const Descriptor* container = descriptor->containing_type();
     if (container) return ObjectName(container) + "." + descriptor->name();
 
-    return FileJavaPackage(descriptor->file()) + ".scala." + descriptor->name();
+    return FileJavaPackage(descriptor->file()) + ".scala." +
+      FileClassName(descriptor->file()) + "." + descriptor->name();
   }
 }  // namespace
 
@@ -67,7 +68,8 @@ void ScalaMessageGenerator::PrintField(const FieldDescriptor* field,
   if (field->is_repeated()) {
     vars["sort"] = "Seq";
     vars["constr"] = "(_ add" + constr_value_part + ")";
-  } else  if (field->type() == FieldDescriptor::TYPE_MESSAGE) {
+  } else  if (field->type() == FieldDescriptor::TYPE_MESSAGE ||
+	      field->type() == FieldDescriptor::TYPE_GROUP) {
     vars["sort"] = "Message";
     vars["constr"] = "(_ set" + constr_value_part + ")"
       "(" + ObjectName(field->message_type()) + ")";
